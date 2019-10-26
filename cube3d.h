@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/25 17:20:33 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/26 17:50:34 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define CUBE3D_H
 # define WIDTH 1024
 # define HEIGHT 1024
-# include "mlx.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
+# include "mlx.h"
+# include <unistd.h>
 
 typedef struct	s_img
 {
@@ -43,6 +44,8 @@ typedef struct	s_data
 	double		plane_x;
 	double		plane_y;
 	int			*map;
+	int			map_height;
+	int			map_width;
 }				t_data;
 
 typedef struct	s_ray
@@ -65,6 +68,11 @@ typedef struct	s_ray
 	double		rdir_x;
 	double		rdir_y;
 }				t_ray;
-void			draw_pix_column(t_ray *ray, t_data *data);
+int				draw_pix_column(t_ray *ray, t_data *data);
 int				ray_casting(t_data *data);
+void			move_up(t_data *data);
+void			move_down(t_data *data);
+void			rotate_right(t_data *data);
+void			rotate_left(t_data *data);
+void			reset_image(t_data *data);
 #endif

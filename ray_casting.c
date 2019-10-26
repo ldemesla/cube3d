@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/25 17:22:57 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/26 18:16:04 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ void	init_dist(t_ray *ray, t_data *data)
 
 void	dda(t_ray *ray, t_data *data)
 {
-	int map[6][10] = {{2,2,2,2,2,2,2,2,2,2},
+	int map[10][10] =
+		{{2,2,2,2,2,2,2,2,2,2},
+		{2,0,0,0,0,0,0,0,0,2},
+		{2,0,0,0,0,0,0,0,0,2},
+		{2,0,0,0,0,0,0,0,0,2},
+		{2,0,0,0,0,0,0,0,0,2},
 		{2,0,0,0,0,0,0,0,0,2},
 		{2,0,0,0,0,0,0,0,0,2},
 		{2,0,0,0,0,0,0,0,0,2},
@@ -87,6 +92,12 @@ int		ray_casting(t_data *data)
 
 	if (!(ray = malloc(sizeof(t_ray))))
 		return (0);
+	if (!(data->img.ptr = mlx_new_image(data->ptr, WIDTH, HEIGHT)))
+		return (0);
+	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr, &data->img.bpp,
+		&data->img.size_l, &data->img.endian)))
+		return (0);
+	data->x = 0;
 	while (data->x < WIDTH)
 	{
 		init_ray(ray, data);
@@ -96,5 +107,6 @@ int		ray_casting(t_data *data)
 		draw_pix_column(ray, data);
 		data->x++;
 	}
+	mlx_put_image_to_window(data->ptr, data->win, data->img.ptr, 0, 0);
 	return (1);
 }
