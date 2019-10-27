@@ -6,24 +6,30 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:19:36 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/26 12:11:36 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/27 12:47:53 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-// Ajotuer collision, jsute regarder si le carre = a 0
-
 void	move_up(t_data *data)
 {
-	data->pos_x += data->dir_x;
-	data->pos_y += data->dir_y;
+	if ((data->pos_x + data->dir_x) < 9 && (data->pos_y + data->dir_y) < 9
+		&& (data->pos_x + data->dir_x) > 0 && (data->pos_y + data->dir_y) > 0)
+	{
+		data->pos_x += data->dir_x;
+		data->pos_y += data->dir_y;
+	}
 }
 
 void	move_down(t_data *data)
 {
-	data->pos_x -= data->dir_x;
-	data->pos_y -= data->dir_y;
+	if ((data->pos_x - data->dir_x) > 0 && (data->pos_y - data->dir_y > 0)
+		&& (data->pos_x - data->dir_x) < 9 && (data->pos_y - data->dir_y < 9))
+	{
+		data->pos_x -= data->dir_x;
+		data->pos_y -= data->dir_y;
+	}
 }
 
 void	rotate_right(t_data *data)

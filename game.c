@@ -6,13 +6,13 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/26 18:03:16 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/27 12:48:53 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int	init_data(t_data *data)
+int			init_data(t_data *data)
 {
 	if (!(data->ptr = mlx_init()))
 		return (0);
@@ -27,9 +27,10 @@ int	init_data(t_data *data)
 	return (1);
 }
 
-int		key_pressed(int keycode, void *param)
+int			key_pressed(int keycode, void *param)
 {
 	t_data *data;
+
 	data = (t_data*)param;
 	data->x = 0;
 	if (keycode == 13)
@@ -44,7 +45,7 @@ int		key_pressed(int keycode, void *param)
 	return (1);
 }
 
-int	main(void)
+int			main(void)
 {
 	t_data *data;
 

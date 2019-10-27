@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/26 18:16:04 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/27 12:50:21 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ void	init_dist(t_ray *ray, t_data *data)
 {
 	if (ray->rdir_x < 0 && (ray->step_x = -1) == -1)
 		ray->dist_x = (data->pos_x - ray->map_x) * ray->d_dist_x;
-	else if (ray->rdir_x > 0 && (ray->step_x = 1))
+	else
+	{
 		ray->dist_x = (-data->pos_x + 1 + ray->map_x) * ray->d_dist_x;
+		ray->step_x = 1;
+	}
 	if (ray->rdir_y < 0 && (ray->step_y = -1) == -1)
 		ray->dist_y = (data->pos_y - ray->map_y) * ray->d_dist_y;
-	else if (ray->rdir_y > 0 && (ray->step_y = 1))
+	else
+	{
 		ray->dist_y = (-data->pos_y + 1 + ray->map_y) * ray->d_dist_y;
+		ray->step_y = 1;
+	}
 }
 
 void	dda(t_ray *ray, t_data *data)
@@ -49,7 +55,6 @@ void	dda(t_ray *ray, t_data *data)
 		{2,0,0,0,0,0,0,0,0,2},
 		{2,0,0,0,0,0,0,0,0,2},
 		{2,2,2,2,2,2,2,2,2,2}};
-
 	while (ray->hit == 0)
 	{
 		if (ray->dist_x < ray->dist_y)
@@ -64,7 +69,7 @@ void	dda(t_ray *ray, t_data *data)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (map[ray->map_x][ray->map_y])
+		if (map[ray->map_x][ray->map_y] > 0)
 			ray->hit = 1;
 	}
 }
@@ -72,11 +77,11 @@ void	dda(t_ray *ray, t_data *data)
 void	get_wall_height(t_ray *ray, t_data *data)
 {
 	if (ray->side == 0)
-		ray->wall_dist = ((double)ray->map_x - data->pos_x + (1 -
-				(double)ray->step_x / 2)) / ray->rdir_x;
+		ray->wall_dist = (ray->map_x - data->pos_x + (1 -
+		ray->step_x) / 2) / ray->rdir_x;
 	else
-		ray->wall_dist = ((double)ray->map_y - data->pos_y + (1 -
-				(double)ray->step_y / 2)) / ray->rdir_y;
+		ray->wall_dist = (ray->map_y - data->pos_y + (1 -
+		ray->step_y) / 2) / ray->rdir_y;
 	ray->wall_height = (int)((double)HEIGHT / ray->wall_dist);
 	ray->lower_pix = -ray->wall_height / 2 + HEIGHT / 2;
 	if (ray->lower_pix < 0)
@@ -94,8 +99,8 @@ int		ray_casting(t_data *data)
 		return (0);
 	if (!(data->img.ptr = mlx_new_image(data->ptr, WIDTH, HEIGHT)))
 		return (0);
-	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr, &data->img.bpp,
-		&data->img.size_l, &data->img.endian)))
+	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr, 
+		&data->img.bpp, &data->img.size_l, &data->img.endian)))
 		return (0);
 	data->x = 0;
 	while (data->x < WIDTH)
