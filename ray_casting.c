@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/27 12:50:21 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/28 16:32:55 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_ray(t_ray *ray, t_data *data)
 {
 	ray->map_x = (int)data->pos_x;
 	ray->map_y = (int)data->pos_y;
-	ray->camera_x = 2 * data->x / (double)WIDTH - 1;
+	ray->camera_x = 2 * data->x / (double)data->width - 1;
 	ray->rdir_x = data->dir_x + data->plane_x * ray->camera_x;
 	ray->rdir_y = data->dir_y + data->plane_y * ray->camera_x;
 	ray->d_dist_x = fabs(1 / ray->rdir_x);
@@ -44,17 +44,6 @@ void	init_dist(t_ray *ray, t_data *data)
 
 void	dda(t_ray *ray, t_data *data)
 {
-	int map[10][10] =
-		{{2,2,2,2,2,2,2,2,2,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,0,0,0,0,0,0,0,0,2},
-		{2,2,2,2,2,2,2,2,2,2}};
 	while (ray->hit == 0)
 	{
 		if (ray->dist_x < ray->dist_y)
@@ -69,7 +58,7 @@ void	dda(t_ray *ray, t_data *data)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (map[ray->map_x][ray->map_y] > 0)
+		if (data->map[ray->map_x][ray->map_y] > 0)
 			ray->hit = 1;
 	}
 }
@@ -82,13 +71,13 @@ void	get_wall_height(t_ray *ray, t_data *data)
 	else
 		ray->wall_dist = (ray->map_y - data->pos_y + (1 -
 		ray->step_y) / 2) / ray->rdir_y;
-	ray->wall_height = (int)((double)HEIGHT / ray->wall_dist);
-	ray->lower_pix = -ray->wall_height / 2 + HEIGHT / 2;
+	ray->wall_height = (int)((double)data->height / ray->wall_dist);
+	ray->lower_pix = -ray->wall_height / 2 + data->height / 2;
 	if (ray->lower_pix < 0)
 		ray->lower_pix = 0;
-	ray->higher_pix = ray->wall_height / 2 + HEIGHT / 2;
-	if (ray->higher_pix > HEIGHT)
-		ray->higher_pix = HEIGHT - 1;
+	ray->higher_pix = ray->wall_height / 2 + data->height / 2;
+	if (ray->higher_pix > data->height)
+		ray->higher_pix = data->height - 1;
 }
 
 int		ray_casting(t_data *data)
@@ -97,13 +86,13 @@ int		ray_casting(t_data *data)
 
 	if (!(ray = malloc(sizeof(t_ray))))
 		return (0);
-	if (!(data->img.ptr = mlx_new_image(data->ptr, WIDTH, HEIGHT)))
+	if (!(data->img.ptr = mlx_new_image(data->ptr, data->width, data->height)))
 		return (0);
-	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr, 
+	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr,
 		&data->img.bpp, &data->img.size_l, &data->img.endian)))
 		return (0);
 	data->x = 0;
-	while (data->x < WIDTH)
+	while (data->x < data->width)
 	{
 		init_ray(ray, data);
 		init_dist(ray, data);
@@ -112,6 +101,8 @@ int		ray_casting(t_data *data)
 		draw_pix_column(ray, data);
 		data->x++;
 	}
+	free(ray);
 	mlx_put_image_to_window(data->ptr, data->win, data->img.ptr, 0, 0);
+	free(data->img.ptr);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:19:36 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/27 12:47:53 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/28 15:55:23 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	move_up(t_data *data)
 {
-	if ((data->pos_x + data->dir_x) < 9 && (data->pos_y + data->dir_y) < 9
-		&& (data->pos_x + data->dir_x) > 0 && (data->pos_y + data->dir_y) > 0)
+	if (data->map[(int)(data->pos_x + data->dir_x)]
+		[(int)(data->pos_y + data->dir_y)] == 0)
 	{
 		data->pos_x += data->dir_x;
 		data->pos_y += data->dir_y;
@@ -24,8 +24,8 @@ void	move_up(t_data *data)
 
 void	move_down(t_data *data)
 {
-	if ((data->pos_x - data->dir_x) > 0 && (data->pos_y - data->dir_y > 0)
-		&& (data->pos_x - data->dir_x) < 9 && (data->pos_y - data->dir_y < 9))
+	if (data->map[(int)(data->pos_x - data->dir_x)]
+		[(int)(data->pos_y - data->dir_y)] == 0)
 	{
 		data->pos_x -= data->dir_x;
 		data->pos_y -= data->dir_y;

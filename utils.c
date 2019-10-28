@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/25 15:41:59 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 14:55:35 by ldemesla         ###   ########.fr       */
+/*   Created: 2019/10/28 15:56:54 by ldemesla          #+#    #+#             */
+/*   Updated: 2019/10/28 16:29:46 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int		draw_pix_column(t_ray *ray, t_data *data)
+void	free_map(t_data *data)
 {
-	while (ray->higher_pix >= ray->lower_pix)
+	int i;
+
+	i = 0;
+	printf("%d\n", data->map_height);
+	while (i < data->map_height)
 	{
-		data->img.data[data->width * (ray->higher_pix - 1) +
-		(int)data->x] = 200;
-		ray->higher_pix--;
+		free(data->map[i]);
+		printf("%d\n", i);
+		i++;
 	}
-	return (1);
+	free(data->map);
+}
+
+void	free_data(t_data **data)
+{
+	free(data[0]->ptr);
+	free(data[0]->win);
+	free(data[0]->north.ptr);
+	free(data[0]->south.ptr);
+	free(data[0]->east.ptr);
+	free(data[0]->west.ptr);
+	free(data[0]);
 }
