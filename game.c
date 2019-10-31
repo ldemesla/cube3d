@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/30 21:01:32 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:40:22 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int			init_data(t_data *data)
 {
 	if (!(data->ptr = mlx_init()))
 		return (0);
-	data->pos_x = 5;
-	data->pos_y = 8;
-	data->dir_x = -1;
+	data->pos_x = 0;
+	data->pos_y = 0;
+	data->dir_x = 0;
 	data->dir_y = 0;
 	data->plane_x = 0;
-	data->plane_y = 0.66;
+	data->plane_y = 0;
 	data->map = 0;
 	data->south.ptr = 0;
 	data->north.ptr = 0;

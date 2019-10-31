@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:58:40 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/29 17:29:09 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:46:42 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ int		get_map(char *line, t_data *data)
 	while (temp[i] && data->valid == 1)
 	{
 		if (temp[0] != '1' || temp[data->map_width - 1] != '1' ||
-			(temp[i] != '1' && nb == 0) || temp[i] > '2' || temp[i] < '0')
+			(temp[i] != '1' && nb == 0))
 			data->valid = 0;
+		if ((temp[i] == 'N' || temp[i] == 'S' || temp[i] == 'W' ||
+		temp[i] == 'E') && (temp[i] = '0'))
+			set_pos(data, temp[i], i);
 		i++;
 	}
 	if (data->valid == 1)
@@ -123,7 +126,8 @@ int		parse_args(char **av, t_data *data)
 	free(line);
 	if (!data->width || !data->height || !data->west.ptr || !data->east.ptr
 	|| !data->north.ptr || !data->south.ptr || !data->map || !data->ceiling.set
-	|| !data->floor.set || !data->valid || !check_last(data))
+	|| !data->floor.set || !data->valid || !check_last(data) ||
+	data->pos_x == 0)
 		return (0);
 	return (1);
 }

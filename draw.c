@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:41:59 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/30 22:46:58 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:24:34 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		draw_sky_floor(t_data *data)
 
 	i = 0;
 	data->x = 0;
+	data->to_draw = 0;
 	while (i < (data->width * data->height))
 	{
 		if (i < (data->width * data->height / 2))
@@ -59,20 +60,32 @@ void		draw_sky_floor(t_data *data)
 	}
 }
 
-void		draw_sprites_column(t_data *data, t_ray *ray, t_sprite *s)
+void		draw_sprites_column(t_data *dt, t_ray *ray, t_sprite *s)
 {
-	int lower_pix;
-	int	higher_pix;
+	int		lower_pix;
+	int		higher_pix;
+	int		pX;
+	double	y;
+	double	x;
+	int		color;
+	int		i;
 
-	if (s->diff < (s->size / 2) && s->diff > -(s->size / 2))
+	i = 0;
+	if (s->diff < dt->to_draw->diff)
+		pX = dt->to_draw->diff * -1 + (dt->to_draw->size / 2);
+	else
+		pX = dt->to_draw->diff + (dt->to_draw->size / 2);
+	pX = (float)pX * (dt->sprite.width / dt->to_draw->size);
+	lower_pix= -dt->to_draw->size / 2 + dt->height / 2;
+	higher_pix = dt->to_draw->size / 2 + dt->height / 2;
+	y = (float)dt->sprite.height / (float)dt->to_draw->size;
+	while (lower_pix < higher_pix)
 	{
-		lower_pix= -s->size / 2 + data->height / 2;
-		higher_pix = s->size / 2 + data->height / 2;
-		while (lower_pix < higher_pix)
-		{
-			data->img.data[(int)data->x + (lower_pix * data->width)] = 200;
-			lower_pix++;
-		}
+		color = dt->sprite.data[pX + (int)(i * y) * (dt->sprite.width)];
+		if (color > 0)
+			dt->img.data[(int)dt->x + ((lower_pix * dt->width))] = color;
+		i++;
+		lower_pix++;
 	}
 }
 
@@ -80,21 +93,23 @@ double		get_center(t_data *dt, t_sprite *s, t_ray *ray)
 {
 	double	x;
 	double	y;
-	double	x2;
 	double	dist;
 	double	dist2;
 
 	x = s->x - dt->pos_x;
 	y = s->y - dt->pos_y;
 	dist = sqrt(x*x + y*y);
-	s->y_c = dt->pos_y + y -dt->pos_y;
-	x2 = sqrt((dt->pos_x + x -dt->pos_x) * (dt->pos_x + x -dt->pos_x));
-	dist2 = sqrt(x2 * x2);
+	if ((dt->dir_x > 0.5 || dt->dir_x < -0.5) && (dt->dir_y < 0.5 &&
+		dt->dir_y > -0.5))
+		s->y_c = dt->pos_y + y -dt->pos_y;
+	else
+		s->y_c = dt->pos_x + x -dt->pos_x;
+	dist2 = sqrt(s->y_c * s->y_c);
 	s->size = dt->height / dist;
 	return (to_degree(acos(dist2 / dist)));
 }
 
-void		draw_sprites(t_data *data, t_ray *ray)
+void		draw_sprites(t_data *dt, t_ray *ray)
 {
 	t_sprite	*s;
 	float		angle_s;
@@ -104,17 +119,16 @@ void		draw_sprites(t_data *data, t_ray *ray)
 	s = ray->sprite;
 	while (s)
 	{
-		angle_c = get_center(data, s, ray);
-		angle_s = get_side(data, ray, s);
-		if ((s->y_c >= 0 && s->y_s <= 0) || (s->y_c <= 0 && s->y_s >= 0))
-		{
-			printf("differents!!\n");
-			s->diff = (180 - angle_c - angle_s) * (float)(data->width / 66);
-		}
+		angle_c = get_center(dt, s, ray);
+		angle_s = get_side(dt, ray, s);
+		if ((s->y_c > 0 && s->y_s < 0) || (s->y_c < 0 && s->y_s > 0))
+			s->diff = (180 - angle_c - angle_s) * (float)(dt->width / 66);
 		else
-			s->diff = (angle_s - angle_c) * ((float)(data->width) / 66);
-		printf("%f, %f\n", s->y_c, s->y_s);
-		draw_sprites_column(data, ray, s);
+			s->diff = (angle_s - angle_c) * ((float)(dt->width) / 66);
+		s->diff = fabs(s->diff);
+		if (dt->to_draw && dt->to_draw->diff < (dt->to_draw->size / 2))
+			draw_sprites_column(dt, ray, s);
+		dt->to_draw = s;
 		s = s->next;
 	}
 }

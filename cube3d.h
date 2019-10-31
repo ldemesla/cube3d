@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/30 21:25:53 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:44:47 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ typedef struct s_color
 	int	set;
 }				t_color;
 
+typedef struct s_sprite
+{
+	double				x;
+	double				y;
+	double				dst;
+	float				diff;
+	float				size;
+	float				y_c;
+	float				y_s;
+	struct	s_sprite	*next;
+}	t_sprite;
+
 typedef struct	s_data
 {
 	void		*ptr;
@@ -79,20 +91,9 @@ typedef struct	s_data
 	int			height;
 	int			save;
 	t_color		floor;
+	t_sprite	*to_draw;
 	t_color		ceiling;
 }				t_data;
-
-typedef struct s_sprite
-{
-	double				x;
-	double				y;
-	double				dst;
-	float				diff;
-	float				size;
-	float				y_c;
-	float				y_s;
-	struct	s_sprite	*next;
-}	t_sprite;
 
 typedef struct	s_ray
 {
@@ -146,4 +147,6 @@ int				get_size(t_data *data, t_ray *ray);
 float			to_degree(float rad);
 float			to_radian(float degree);
 float			get_side(t_data *data, t_ray *ray, t_sprite *s);
+void			get_real_diff(t_sprite *s, t_data *dt);
+void			set_pos(t_data *data, char c, int y);
 #endif
