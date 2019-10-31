@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 16:33:36 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/30 21:25:53 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,19 @@ typedef struct	s_data
 	t_color		floor;
 	t_color		ceiling;
 }				t_data;
+
+typedef struct s_sprite
+{
+	double				x;
+	double				y;
+	double				dst;
+	float				diff;
+	float				size;
+	float				y_c;
+	float				y_s;
+	struct	s_sprite	*next;
+}	t_sprite;
+
 typedef struct	s_ray
 {
 	int			map_x;
@@ -95,15 +108,19 @@ typedef struct	s_ray
 	int			side;
 	double		wall_dist;
 	int			wall_height;
+	t_sprite	*sprite;
 	int			lower_pix;
 	int			higher_pix;
 	double		camera_x;
 	double		rdir_x;
 	double		rdir_y;
+	int			tex_x;;
 }				t_ray;
 int				draw_pix_column(t_ray *ray, t_data *data);
 int				ray_casting(t_data *data);
 void			move_up(t_data *data);
+void			move_right(t_data *data);
+void			move_left(t_data *data);
 void			move_down(t_data *data);
 void			rotate_right(t_data *data);
 void			rotate_left(t_data *data);
@@ -119,4 +136,14 @@ int				ft_compare(char *line, char *set);
 char			*to_file(char *line, char c);
 void			free_map(t_data *data);
 void			free_data(t_data **data);
+void			draw_sky_floor(t_data *data);
+void			load_texture_data(t_data *data, char *line);
+int				closer(void *data);
+int				add_sprite(t_data *data, t_ray *ray);
+void			draw_sprites(t_data *data, t_ray *ray);
+int				*get_texture(t_data *data, t_ray *ray);
+int				get_size(t_data *data, t_ray *ray);
+float			to_degree(float rad);
+float			to_radian(float degree);
+float			get_side(t_data *data, t_ray *ray, t_sprite *s);
 #endif

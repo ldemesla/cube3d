@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:58:40 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 16:33:24 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/29 17:29:09 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	get_textures(char *line, t_data *data)
 	else if (ft_compare("S./", line) == 0)
 		data->sprite.ptr = mlx_xpm_file_to_image(data->ptr, to_file(line, '/'),
 		&data->sprite.width, &data->sprite.height);
+	load_texture_data(data, line);
 }
 
 int		get_map(char *line, t_data *data)
@@ -72,7 +73,7 @@ int		get_map(char *line, t_data *data)
 	while (temp[i] && data->valid == 1)
 	{
 		if (temp[0] != '1' || temp[data->map_width - 1] != '1' ||
-			(temp[i] != '1' && nb == 0))
+			(temp[i] != '1' && nb == 0) || temp[i] > '2' || temp[i] < '0')
 			data->valid = 0;
 		i++;
 	}

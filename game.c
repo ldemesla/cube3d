@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 16:33:44 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/30 21:01:32 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int			init_data(t_data *data)
 {
 	if (!(data->ptr = mlx_init()))
 		return (0);
-	data->pos_x = 1;
-	data->pos_y = 1;
+	data->pos_x = 5;
+	data->pos_y = 8;
 	data->dir_x = -1;
-	data->dir_y = 1;
-	data->plane_x = 0.33;
-	data->plane_y = 0.33;
+	data->dir_y = 0;
+	data->plane_x = 0;
+	data->plane_y = 0.66;
 	data->map = 0;
 	data->south.ptr = 0;
 	data->north.ptr = 0;
@@ -47,16 +47,16 @@ int			key_pressed(int keycode, void *param)
 		move_up(data);
 	else if (keycode == 1)
 		move_down(data);
-	else if (keycode == 2)
-		rotate_right(data);
 	else if (keycode == 0)
+		move_left(data);
+	else if (keycode == 2)
+		move_right(data);
+	else if (keycode == 124)
+		rotate_right(data);
+	else if (keycode == 123)
 		rotate_left(data);
 	else if (keycode == 53)
-	{
-		free_map(data);
-		free_data(&data);
-		exit(EXIT_SUCCESS);
-	}
+		closer((void*)data);
 	ray_casting(data);
 	return (1);
 }

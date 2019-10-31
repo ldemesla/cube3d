@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 16:32:55 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/30 20:37:50 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_ray(t_ray *ray, t_data *data)
 	ray->d_dist_x = fabs(1 / ray->rdir_x);
 	ray->d_dist_y = fabs(1 / ray->rdir_y);
 	ray->hit = 0;
+	ray->sprite = 0;
 }
 
 void	init_dist(t_ray *ray, t_data *data)
@@ -42,7 +43,7 @@ void	init_dist(t_ray *ray, t_data *data)
 	}
 }
 
-void	dda(t_ray *ray, t_data *data)
+int		dda(t_ray *ray, t_data *data)
 {
 	while (ray->hit == 0)
 	{
@@ -58,9 +59,13 @@ void	dda(t_ray *ray, t_data *data)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (data->map[ray->map_x][ray->map_y] > 0)
+		if (data->map[ray->map_x][ray->map_y] == 2)
+			if (!(add_sprite(data, ray)))
+				return (0);
+		if (data->map[ray->map_x][ray->map_y] == 1)
 			ray->hit = 1;
 	}
+	return (1);
 }
 
 void	get_wall_height(t_ray *ray, t_data *data)
@@ -91,14 +96,16 @@ int		ray_casting(t_data *data)
 	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr,
 		&data->img.bpp, &data->img.size_l, &data->img.endian)))
 		return (0);
-	data->x = 0;
+	draw_sky_floor(data);
 	while (data->x < data->width)
 	{
 		init_ray(ray, data);
 		init_dist(ray, data);
-		dda(ray, data);
+		if (!(dda(ray, data)))
+			return (0);
 		get_wall_height(ray, data);
 		draw_pix_column(ray, data);
+		draw_sprites(data, ray);
 		data->x++;
 	}
 	free(ray);
