@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 17:40:22 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:35:37 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			main(int ac, char **av)
 			return (0);
 		if (!ray_casting(data))
 			return (0);
-		mlx_key_hook(data->win, &key_pressed, data);
+		mlx_hook(data->win, 2, 0, &key_pressed, data);
 		mlx_loop(data->ptr);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:53:44 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 15:01:26 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:53:13 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,44 +26,17 @@ float		get_side(t_data *dt, t_ray *r, t_sprite *s)
 	dist = sqrt(x * x + y * y);
 	if ((dt->dir_x > 0.5 || dt->dir_x < -0.5) && (dt->dir_y < 0.5 &&
 		dt->dir_y > -0.5))
-		s->y_s = dt->pos_y + y -dt->pos_y;
+		s->y_s = dt->pos_y + y - dt->pos_y;
 	else
-		s->y_s = dt->pos_x + x -dt->pos_x;
+		s->y_s = dt->pos_x + x - dt->pos_x;
 	dist2 = sqrt(s->y_s * s->y_s);
 	return (to_degree(acos(dist2 / dist)));
 }
 
-void		get_real_diff(t_sprite *s, t_data *dt)
+void		draw_weapon(t_data *data)
 {
-	s->diff = fabs(s->diff);
-	if ((dt->dir_x > 0.5 || dt->dir_x < -0.5) && (dt->dir_y < 0.5	&& dt->dir_y > -0.5))
-	{
-		if (dt->dir_x > 0.5)
-			if (s->y_c < s->y_s)
-			{
-				printf("first\n");
-				s->diff *= -1;
-			}
-		if (dt->dir_x < -0.5)
-			if (s->y_c > s->y_s)
-			{
-				printf("second\n");
-				s->diff *= -1;
-			}
-	}
-	else
-	{
-		if (dt->dir_y > 0.5)
-			if (s->y_c > s->y_s)
-			{
-				printf("third\n");
-				s->diff *= -1;
-			}
-		if (dt->dir_y < -0.5)
-			if (s->y_c < s->y_s)
-			{
-				printf("forth\n");
-				s->diff *= -1;
-			}
-	}
+	data->weapon.ptr = mlx_png_file_to_image(data->ptr,
+	"textures/sprites/BackR01.png", &data->weapon.width, &data->weapon.height);
+	if (data->weapon.ptr == 0)
+		printf("ca marche pas\n");
 }

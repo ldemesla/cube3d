@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:33:18 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 17:47:13 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:54:03 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,24 @@ int		get_size(t_data *data, t_ray *ray)
 
 float	to_radian(float degree)
 {
-	float   rad;
-	rad = degree * (M_PI/(float)180);
+	float	rad;
+
+	rad = degree * (M_PI / (float)180);
 	return (rad);
 }
 
 float	to_degree(float rad)
 {
-	float   degree;
-	degree = rad / (M_PI/(float)180);
+	float	degree;
+
+	degree = rad / (M_PI / (float)180);
 	return (degree);
 }
 
-void		set_pos(t_data *data, char c, int y)
+void	set_pos(t_data *data, char c, int y)
 {
-	data->pos_x = data->map_height;
-	data->pos_y = y;
+	data->pos_x = data->map_height + 0.3;
+	data->pos_y = y + 0.3;
 	if (c == 'N')
 	{
 		data->dir_x = -1;

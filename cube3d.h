@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 17:44:47 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:44:21 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_data
 	t_color		floor;
 	t_sprite	*to_draw;
 	t_color		ceiling;
+	t_img		weapon;
 }				t_data;
 
 typedef struct	s_ray
@@ -147,6 +148,8 @@ int				get_size(t_data *data, t_ray *ray);
 float			to_degree(float rad);
 float			to_radian(float degree);
 float			get_side(t_data *data, t_ray *ray, t_sprite *s);
-void			get_real_diff(t_sprite *s, t_data *dt);
 void			set_pos(t_data *data, char c, int y);
+int				is_loaded(char *line, t_data *data);
+void			clear_ray(t_ray **ray);
+void			draw_weapon(t_data *data);
 #endif

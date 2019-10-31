@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 15:56:54 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/29 22:18:51 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:35:04 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_data(t_data **data)
 	free(data[0]->south.ptr);
 	free(data[0]->east.ptr);
 	free(data[0]->west.ptr);
+	free(data[0]->sprite.ptr);
 	free(data[0]);
 }
 
@@ -63,5 +64,25 @@ int		closer(void *data)
 	free_map(temp);
 	free_data(&temp);
 	exit(EXIT_SUCCESS);
+	return (1);
+}
+
+int		is_loaded(char *line, t_data *data)
+{
+	if (ft_compare("NO./", line) == 0)
+		if (!data->north.ptr)
+			return (0);
+	if (ft_compare("SO./", line) == 0)
+		if (!data->south.ptr)
+			return (0);
+	if (ft_compare("WE./", line) == 0)
+		if (!data->west.ptr)
+			return (0);
+	if (ft_compare("EA./", line) == 0)
+		if (!data->east.ptr)
+			return (0);
+	if (ft_compare("S./", line) == 0)
+		if (!data->sprite.ptr)
+			return (0);
 	return (1);
 }

@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move2.c                                            :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 14:51:41 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:21:03 by ldemesla         ###   ########.fr       */
+/*   Created: 2019/10/31 20:27:48 by ldemesla          #+#    #+#             */
+/*   Updated: 2019/10/31 20:30:03 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-void	move_right(t_data *data)
+void	clear_ray(t_ray **ray)
 {
-	if (data->map[(int)(data->pos_x + data->plane_x)]
-		[(int)(data->pos_y - data->plane_y)] == 0)
-	{
-		data->pos_x += (data->plane_x * 0.5);
-		data->pos_y += (data->plane_y * 0.5);
-	}
-}
+	t_sprite *temp;
+	t_sprite *temp2;
 
-void	move_left(t_data *data)
-{
-	if (data->map[(int)(data->pos_x - data->plane_x)]
-		[(int)(data->pos_y - data->plane_y)] == 0)
+	temp = ray[0]->sprite;
+	while (temp)
 	{
-		data->pos_x -= (data->plane_x * 0.5);
-		data->pos_y -= (data->plane_y * 0.5);
+		temp2 = temp;
+		temp = temp->next;
+		free(temp);
 	}
+	free(*ray);
 }

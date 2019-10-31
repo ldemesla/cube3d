@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:58:40 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 17:46:42 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:20:33 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	get_textures(char *line, t_data *data)
 	else if (ft_compare("S./", line) == 0)
 		data->sprite.ptr = mlx_xpm_file_to_image(data->ptr, to_file(line, '/'),
 		&data->sprite.width, &data->sprite.height);
-	load_texture_data(data, line);
+	if (is_loaded(line, data))
+		load_texture_data(data, line);
 }
 
 int		get_map(char *line, t_data *data)
@@ -67,8 +68,7 @@ int		get_map(char *line, t_data *data)
 	i = 0;
 	if (nb == 0)
 		data->map_width = ft_strlen_map(line);
-	temp = remove_space(line);
-	if (temp == 0)
+	if (!(temp = remove_space(line)))
 		return (0);
 	while (temp[i] && data->valid == 1)
 	{
@@ -76,15 +76,16 @@ int		get_map(char *line, t_data *data)
 			(temp[i] != '1' && nb == 0))
 			data->valid = 0;
 		if ((temp[i] == 'N' || temp[i] == 'S' || temp[i] == 'W' ||
-		temp[i] == 'E') && (temp[i] = '0'))
+		temp[i] == 'E'))
+		{
 			set_pos(data, temp[i], i);
+			temp[i] = '0';
+		}
 		i++;
 	}
-	if (data->valid == 1)
-		if (!add_line(data, temp, nb))
-			return (0);
-	nb++;
-	return (1);
+	if (data->valid == 0 || !add_line(data, temp, nb))
+		return (0);
+	return ((nb = nb + 1));
 }
 
 int		parse_infos(t_data *data, char *line)

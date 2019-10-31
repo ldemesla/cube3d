@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 15:19:33 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:30:26 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		ray_casting(t_data *data)
 		draw_sprites(data, ray);
 		data->x++;
 	}
-	free(ray);
+	clear_ray(&ray);
 	mlx_put_image_to_window(data->ptr, data->win, data->img.ptr, 0, 0);
 	free(data->img.ptr);
 	return (1);

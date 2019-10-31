@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:12:49 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 14:49:19 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:54:47 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		add_sprite(t_data *dt, t_ray *r)
 	t_sprite	*new;
 
 	if (!(new = malloc(sizeof(t_sprite))))
-			return (0);
+		return (0);
 	new->y = r->map_y + 0.5;
 	new->x = r->map_x + 0.5;
 	if (r->side == 0)
