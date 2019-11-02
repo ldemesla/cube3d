@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 17:10:28 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:57:40 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ int			main(int ac, char **av)
 		init_data(data);
 		if (!parse_args(av, data))
 			return (closer(data));
+		if (data->width > 2500)
+			data->width = 2500;
+		if (data->height > 1300)
+			data->height = 1300;
 		if (!(data->win = mlx_new_window(data->ptr, data->width, data->height,
 			"Cube 3d")))
 			return (0);
