@@ -6,15 +6,15 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:58:40 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:20:33 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:06:57 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-void	get_color_and_resolution(char *line, t_data *data)
+int		get_color_and_resolution(char *line, t_data *data)
 {
-	if (ft_compare("F", line) == 0)
+	if (ft_compare("F", line) == 0 && check_end_line(line, 3))
 	{
 		data->floor.R = get_number(line, 1);
 		data->floor.G = get_number(line, 2);
@@ -22,7 +22,7 @@ void	get_color_and_resolution(char *line, t_data *data)
 		if (data->floor.B >= 0 && data->floor.G >= 0 && data->floor.R >= 0)
 			data->floor.set = 1;
 	}
-	else if (ft_compare("C", line) == 0)
+	else if (ft_compare("C", line) == 0 && check_end_line(line, 3))
 	{
 		data->ceiling.R = get_number(line, 1);
 		data->ceiling.G = get_number(line, 2);
@@ -31,11 +31,14 @@ void	get_color_and_resolution(char *line, t_data *data)
 		data->ceiling.R >= 0)
 			data->ceiling.set = 1;
 	}
-	else if (ft_compare("R", line) == 0)
+	else if (ft_compare("R", line) == 0 && check_end_line(line, 2))
 	{
 		data->width = get_number(line, 1);
 		data->height = get_number(line, 2);
 	}
+	else
+		return (0);
+	return (1);
 }
 
 void	get_textures(char *line, t_data *data)
@@ -65,25 +68,23 @@ int		get_map(char *line, t_data *data)
 	int			i;
 	char		*temp;
 
-	i = 0;
+	i = -1;
 	if (nb == 0)
 		data->map_width = ft_strlen_map(line);
 	if (!(temp = remove_space(line)))
 		return (0);
-	while (temp[i] && data->valid == 1)
+	while (temp[++i] && data->valid == 1)
 	{
 		if (temp[0] != '1' || temp[data->map_width - 1] != '1' ||
-			(temp[i] != '1' && nb == 0))
+			(temp[i] != '1' && nb == 0) || (temp[i] != '0' && temp[i] != '1' &&
+			temp[i] != '2' && temp[i] != 'N' && temp[i] != 'S' &&
+			temp[i] != 'W' && temp[i] != 'E'))
 			data->valid = 0;
 		if ((temp[i] == 'N' || temp[i] == 'S' || temp[i] == 'W' ||
-		temp[i] == 'E'))
-		{
-			set_pos(data, temp[i], i);
+		temp[i] == 'E') && set_pos(data, temp[i], i))
 			temp[i] = '0';
-		}
-		i++;
 	}
-	if (data->valid == 0 || !add_line(data, temp, nb))
+	if (!add_line(data, temp, nb))
 		return (0);
 	return ((nb = nb + 1));
 }
@@ -97,11 +98,24 @@ int		parse_infos(t_data *data, char *line)
 		get_textures(line, data);
 	else if ((line[0] == 'F' || line[0] == 'C' || line[0] == 'R') &&
 			data->map == 0)
-		get_color_and_resolution(line, data);
-	else if (line[0] == '1')
-		if (!(get_map(line, data)))
+	{
+		if (!(get_color_and_resolution(line, data)))
 			return (0);
-	return (1);
+	}
+	else if (line[0] == '1' && !(get_map(line, data)))
+		return (0);
+	if (line[0] == '0')
+	{
+		write(1, "Error\nMap need to be surrounded by walls\n", 41);
+		return (0);
+	}
+	if (line[0] != '\n' && line[0] != 'N' && line[0] != 'S' && line[0] !=
+	'E' && line[0] != 'W' && line[0] != 'R' && line[0] != 'C' && line[0] != 'F'
+	&& line[0] != '1' && line[0] != '\0')
+		write(1, "Error\nIncorrect data\n", 21);
+	else
+		return (1);
+	return (0);
 }
 
 int		parse_args(char **av, t_data *data)
@@ -125,10 +139,7 @@ int		parse_args(char **av, t_data *data)
 	if (!(parse_infos(data, line)))
 		return (0);
 	free(line);
-	if (!data->width || !data->height || !data->west.ptr || !data->east.ptr
-	|| !data->north.ptr || !data->south.ptr || !data->map || !data->ceiling.set
-	|| !data->floor.set || !data->valid || !check_last(data) ||
-	data->pos_x == 0)
+	if (!check_info(data))
 		return (0);
 	return (1);
 }

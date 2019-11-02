@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:33:18 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 19:54:03 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 16:38:57 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ float	to_degree(float rad)
 	return (degree);
 }
 
-void	set_pos(t_data *data, char c, int y)
+int		set_pos(t_data *data, char c, int y)
 {
 	data->pos_x = data->map_height + 0.3;
 	data->pos_y = y + 0.3;
@@ -69,11 +69,12 @@ void	set_pos(t_data *data, char c, int y)
 	else if (c == 'W')
 	{
 		data->dir_y = -1;
-		data->plane_x = -0.66;
+		data->plane_x = 0.66;
 	}
 	else
 	{
 		data->dir_y = 1;
-		data->plane_x = 0.66;
+		data->plane_x = -0.66;
 	}
+	return (1);
 }

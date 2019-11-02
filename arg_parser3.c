@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 16:38:30 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 14:54:59 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 16:31:22 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ char	*remove_space(char *line)
 		if ((line[i] >= '0' && line[i] <= '4') || line[i] == 'N' ||
 			line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
 			temp[o++] = line[i];
-		else if (line[i] != ' ')
-			return (0);
 		i++;
 	}
 	temp[o] = '\0';
@@ -48,7 +46,10 @@ int		check_extension(char *line)
 		i++;
 	if (line[i + 1] != 'c' || line[i + 2] != 'u' || line[i + 3] != 'b'
 		|| line[i + 4] != '\0')
+	{
+		write(1, "Error\nIncorrect file type\n", 26);
 		return (-1);
+	}
 	return (open(line, O_RDONLY));
 }
 

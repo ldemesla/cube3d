@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 19:35:37 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:10:28 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			init_data(t_data *data)
 	data->sprite.ptr = 0;
 	data->valid = 1;
 	data->save = 0;
+	data->weapon.ptr = 0;
 	return (1);
 }
 
@@ -57,7 +58,12 @@ int			key_pressed(int keycode, void *param)
 		rotate_left(data);
 	else if (keycode == 53)
 		closer((void*)data);
-	ray_casting(data);
+	if (keycode == 49)
+		shot(data);
+	else if (keycode == 14)
+		give_money(data);
+	else
+		ray_casting(data, "textures/sprites/shot1.XPM");
 	return (1);
 }
 
@@ -71,19 +77,17 @@ int			main(int ac, char **av)
 			return (0);
 		init_data(data);
 		if (!parse_args(av, data))
-		{
-			write(1, "Error\nIncorrect map\n", 20);
-			return (0);
-		}
+			return (closer(data));
 		if (!(data->win = mlx_new_window(data->ptr, data->width, data->height,
 			"Cube 3d")))
 			return (0);
-		if (!ray_casting(data))
+		if (!ray_casting(data, "textures/sprites/shot1.XPM"))
 			return (0);
 		mlx_hook(data->win, 2, 0, &key_pressed, data);
+		mlx_hook(data->win, 17, 0, &closer, data);
 		mlx_loop(data->ptr);
 	}
 	else
-		write(1, "Error\nYou have to provide a map\n", 32);
+		write(1, "Error\nYou have to provide a least one argument\n", 47);
 	return (0);
 }

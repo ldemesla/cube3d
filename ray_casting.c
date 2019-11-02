@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:30:26 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 14:31:30 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,14 @@ void	get_wall_height(t_ray *ray, t_data *data)
 		ray->higher_pix = data->height - 1;
 }
 
-int		ray_casting(t_data *data)
+int		ray_casting(t_data *data, char *line)
 {
 	t_ray *ray;
 
-	if (!(ray = malloc(sizeof(t_ray))))
-		return (0);
-	if (!(data->img.ptr = mlx_new_image(data->ptr, data->width, data->height)))
-		return (0);
-	if (!(data->img.data = (int*)mlx_get_data_addr(data->img.ptr,
-		&data->img.bpp, &data->img.size_l, &data->img.endian)))
+	if (!init(&ray, &data))
 		return (0);
 	draw_sky_floor(data);
-	while (data->x < data->width)
+	while (++data->x < data->width)
 	{
 		init_ray(ray, data);
 		init_dist(ray, data);
@@ -106,8 +101,9 @@ int		ray_casting(t_data *data)
 		get_wall_height(ray, data);
 		draw_pix_column(ray, data);
 		draw_sprites(data, ray);
-		data->x++;
 	}
+	draw_map(data);
+	draw_weapon(data, line);
 	clear_ray(&ray);
 	mlx_put_image_to_window(data->ptr, data->win, data->img.ptr, 0, 0);
 	free(data->img.ptr);

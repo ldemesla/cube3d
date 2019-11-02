@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:44:21 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 16:38:49 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "mlx.h"
-# include "libft/libft.h"
+# include "minilibx/mlx.h"
 # include <unistd.h>
 # include <fcntl.h>
 
@@ -119,7 +118,7 @@ typedef struct	s_ray
 	int			tex_x;;
 }				t_ray;
 int				draw_pix_column(t_ray *ray, t_data *data);
-int				ray_casting(t_data *data);
+int				ray_casting(t_data *data, char *line);
 void			move_up(t_data *data);
 void			move_right(t_data *data);
 void			move_left(t_data *data);
@@ -135,6 +134,8 @@ int				ft_strlen_map(char *line);
 char			*remove_space(char *line);
 int				check_extension(char *line);
 int				ft_compare(char *line, char *set);
+int				ft_strncmp(char *s1, char *s2, int len);
+int				ft_strlen(char *s);
 char			*to_file(char *line, char c);
 void			free_map(t_data *data);
 void			free_data(t_data **data);
@@ -148,8 +149,15 @@ int				get_size(t_data *data, t_ray *ray);
 float			to_degree(float rad);
 float			to_radian(float degree);
 float			get_side(t_data *data, t_ray *ray, t_sprite *s);
-void			set_pos(t_data *data, char c, int y);
+int				set_pos(t_data *data, char c, int y);
 int				is_loaded(char *line, t_data *data);
 void			clear_ray(t_ray **ray);
-void			draw_weapon(t_data *data);
+void			draw_weapon(t_data *data, char *line);
+void			shot(t_data *data);
+void			give_money(t_data *data);
+void			draw_map(t_data *data);
+int				set_sprite(t_data *data);
+int				init(t_ray **ray, t_data **data);
+int				check_info(t_data *data);
+int				check_end_line(char *line, int nb);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:41:59 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:46:00 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 13:22:28 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			draw_pix_column(t_ray *ray, t_data *data)
 	int		diff;
 
 	diff = 0;
-	if (ray->higher_pix < ray->wall_height)
+	if (ray->higher_pix <= ray->wall_height)
 		diff = (ray->wall_height - ray->higher_pix) / 2;
 	texture = get_texture(data, ray);
 	size = get_size(data, ray);
@@ -34,7 +34,7 @@ int			draw_pix_column(t_ray *ray, t_data *data)
 	{
 		data->img.data[(int)data->x + (ray->lower_pix * data->width)] =
 		texture[(int)(tex_x * (double)size - 1)
-		+ ((int)((ray->higher_pix - ray->lower_pix + diff) * y) * size)];
+		+ ((int)((ray->higher_pix - ray->lower_pix + diff) * y) * (size))];
 		ray->lower_pix++;
 	}
 	return (1);
@@ -45,7 +45,7 @@ void		draw_sky_floor(t_data *data)
 	int		i;
 
 	i = 0;
-	data->x = 0;
+	data->x = -1;
 	data->to_draw = 0;
 	while (i < (data->width * data->height))
 	{
@@ -57,7 +57,6 @@ void		draw_sky_floor(t_data *data)
 			(data->ceiling.G << 8) + data->ceiling.B;
 		i++;
 	}
-	draw_weapon(data);
 }
 
 void		draw_sprites_column(t_data *dt, t_sprite *s)
@@ -74,16 +73,18 @@ void		draw_sprites_column(t_data *dt, t_sprite *s)
 	else
 		p_x = dt->to_draw->diff + (dt->to_draw->size / 2);
 	p_x = (float)p_x * (dt->sprite.width / dt->to_draw->size);
-	lower_pix = (-dt->to_draw->size / 2 + dt->height / 2);
+	lower_pix = (-dt->to_draw->size / 2 + dt->height / 2) - 1;
 	higher_pix = (dt->to_draw->size / 2 + dt->height / 2);
-	while (lower_pix < higher_pix)
+	if (lower_pix < 0)
+		lower_pix = 0;
+	if (higher_pix > dt->height)
+		higher_pix = dt->height - 1;
+	while (++lower_pix < higher_pix)
 	{
-		color = dt->sprite.data[p_x + (int)(i * ((float)dt->sprite.height /
+		color = dt->sprite.data[p_x + (int)(i++ * ((float)dt->sprite.height /
 		(float)dt->to_draw->size)) * (dt->sprite.width)];
-		if (color > 0)
-			dt->img.data[(int)dt->x + ((lower_pix * dt->width))] = color;
-		i++;
-		lower_pix++;
+		if (color != 16515324)
+			dt->img.data[(int)dt->x + ((lower_pix * (dt->width)))] = color;
 	}
 }
 

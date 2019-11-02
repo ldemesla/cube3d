@@ -1,0 +1,3 @@
+textures/sprites/sprite1.xpm
+textures/sprites/sprite2.xpm
+textures/sprites/sprite3.xpm

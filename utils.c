@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 15:56:54 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/31 20:35:04 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:02:29 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_map(t_data *data)
 	int i;
 
 	i = 0;
+	if (data->map == 0)
+		return ;
 	while (i < data->map_height)
 	{
 		free(data->map[i]);
