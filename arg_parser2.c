@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:32:53 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/10/28 16:34:08 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:24:01 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		get_number(char *line, int index)
 	while (i < size && line[i])
 	{
 		nb = 0;
+		if (line[i] != ' ' && line[i] != ',' && line[i] < '0' && line[i] > '9')
+			return (-1);
 		while (line[i] == ' ' || line[i] == ',')
 			i++;
 		if ((line[i] < '0' || line[i] > '9'))

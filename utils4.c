@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 15:24:01 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 17:09:46 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:29:08 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ int		check_end_line(char *line, int nb)
 	{
 		if (*line == ' ' || *line == ',')
 			line++;
-		if (*line <= '9' && *line >= '0')
+		else if (*line <= '9' && *line >= '0' && nb--)
 		{
-			nb--;
 			while (*line <= '9' && *line >= '0' && *line)
 				line++;
 		}
+		else
+			break ;
 	}
 	while (*line)
 	{
