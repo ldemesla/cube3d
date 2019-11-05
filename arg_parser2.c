@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:32:53 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 17:24:01 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/05 12:26:59 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ int		get_number(char *line, int index)
 	count = 0;
 	size = ft_strlen(line) + 1;
 	line = to_file(line, 'R');
-	while (i < size && line[i])
+	while (i < size && line[i] && ((nb = 0) == 0))
 	{
-		nb = 0;
 		if (line[i] != ' ' && line[i] != ',' && line[i] < '0' && line[i] > '9')
 			return (-1);
 		while (line[i] == ' ' || line[i] == ',')
@@ -34,8 +33,7 @@ int		get_number(char *line, int index)
 			return (-1);
 		while (line[i] >= '0' && line[i] <= '9' && line[i])
 			nb = nb * 10 + (line[i++] - 48);
-		count++;
-		if (count == index)
+		if (++count == index)
 			return (nb);
 	}
 	if (count != index)
