@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 14:18:44 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:02:38 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	get_wall_height(t_ray *ray, t_data *data)
 	else
 		ray->wall_dist = (ray->map_y - data->pos_y + (1 -
 		ray->step_y) / 2) / ray->rdir_y;
-	ray->wall_height = (int)((double)data->height / ray->wall_dist);
-	ray->lower_pix = -ray->wall_height / 2 + data->height / 2;
+	ray->wall_height = (int)((float)data->height / (float)ray->wall_dist) + data->crouch;
+	ray->lower_pix = (int)(-ray->wall_height / 2 + data->height / 2 + data->crouch);
 	if (ray->lower_pix < 0)
 		ray->lower_pix = 0;
 	ray->higher_pix = ray->wall_height / 2 + data->height / 2;

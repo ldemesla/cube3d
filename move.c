@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:19:36 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 13:54:11 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:03:39 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	move(t_data *data, int keycode)
 		rotate_right(data);
 	else if (keycode == 123)
 		rotate_left(data);
+	if (data->life <= 0)
+		closer(data);
 }
 
 void	move_up(t_data *data)
@@ -36,6 +38,9 @@ void	move_up(t_data *data)
 		data->pos_x += (data->dir_x * (0.1 * data->speed));
 		data->pos_y += (data->dir_y * (0.1 * data->speed));
 	}
+	if (data->map[(int)(data->pos_x + data->dir_x)]
+		[(int)(data->pos_y + data->dir_y)] == 2)
+		data->life -= 0.1;
 }
 
 void	move_down(t_data *data)
@@ -46,6 +51,9 @@ void	move_down(t_data *data)
 		data->pos_x -= (data->dir_x * (0.1 * data->speed));
 		data->pos_y -= (data->dir_y * (0.1 * data->speed));
 	}
+	if (data->map[(int)(data->pos_x - data->dir_x)]
+		[(int)(data->pos_y - data->dir_y)] == 2)
+		data->life -= 0.1;
 }
 
 void	rotate_left(t_data *data)

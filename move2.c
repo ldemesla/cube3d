@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 14:51:41 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 14:31:45 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:03:35 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	move_right(t_data *data)
 		data->pos_x += (data->plane_x * 0.1);
 		data->pos_y += (data->plane_y * 0.1);
 	}
+	if (data->map[(int)(data->pos_x + data->plane_x)]
+		[(int)(data->pos_y - data->plane_y)] == 2)
+		data->life -= 0.1;
 }
 
 void	move_left(t_data *data)
@@ -30,6 +33,9 @@ void	move_left(t_data *data)
 		data->pos_x -= (data->plane_x * 0.1);
 		data->pos_y -= (data->plane_y * 0.1);
 	}
+	if (data->map[(int)(data->pos_x - data->plane_x)]
+		[(int)(data->pos_y - data->plane_y)] == 2)
+		data->life -= 0.1;
 }
 
 void	run(t_data *data)

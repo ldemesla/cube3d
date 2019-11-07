@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 14:32:01 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:03:28 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			init_data(t_data *data)
 	data->save = 0;
 	data->weapon.ptr = 0;
 	data->speed = 1;
-	data->life = 0.7;
+	data->life = 1;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 14:21:44 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:03:47 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct	s_data
 	int			width;
 	int			height;
 	int			save;
+	float		crouch;
 	t_color		floor;
 	t_sprite	*to_draw;
 	t_color		ceiling;
