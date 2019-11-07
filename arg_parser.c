@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:58:40 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 17:27:05 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 20:13:54 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,8 @@ int		parse_args(char **av, t_data *data)
 {
 	int		fd;
 	char	*line;
-	int		i;
 
-	i = 1;
-	if (ft_strncmp(av[i], "-save", 5) == 0 && ft_strlen(av[1]) == 5 &&
-		(data->save = 1))
-		i++;
-	if ((fd = check_extension(av[i])) < 0)
+	if ((fd = check_extension(av[1])) < 0)
 		return (0);
 	while (get_next_line(fd, &line) && data->valid == 1)
 	{
@@ -141,5 +136,7 @@ int		parse_args(char **av, t_data *data)
 	free(line);
 	if (!check_info(data))
 		return (0);
+	if (av[2] && ft_strncmp(av[2], "--save", 6) == 0 && ft_strlen(av[2]) == 6)
+		data->save = 1;
 	return (1);
 }

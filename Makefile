@@ -6,7 +6,7 @@
 #    By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:12:40 by ldemesla          #+#    #+#              #
-#    Updated: 2019/11/07 14:18:55 by ldemesla         ###   ########.fr        #
+#    Updated: 2019/11/07 17:31:05 by ldemesla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC_FILE=	arg_parser.c\
 			ft_strlen.c\
 			ft_strncmp.c\
 			utils4.c \
+			bmp.c \
 
 OBJ=${SRC_FILE:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 13:24:35 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 15:02:38 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 17:38:40 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	get_wall_height(t_ray *ray, t_data *data)
 	else
 		ray->wall_dist = (ray->map_y - data->pos_y + (1 -
 		ray->step_y) / 2) / ray->rdir_y;
-	ray->wall_height = (int)((float)data->height / (float)ray->wall_dist) + data->crouch;
-	ray->lower_pix = (int)(-ray->wall_height / 2 + data->height / 2 + data->crouch);
+	ray->wall_height = (int)((float)data->height / (float)ray->wall_dist);
+	ray->lower_pix = (int)(-ray->wall_height / 2 + data->height / 2);
 	if (ray->lower_pix < 0)
 		ray->lower_pix = 0;
 	ray->higher_pix = ray->wall_height / 2 + data->height / 2;
@@ -102,8 +102,8 @@ int		ray_casting(t_data *data, char *line)
 		draw_pix_column(ray, data);
 		draw_sprites(data, ray);
 	}
-	draw_map(data);
 	draw_life(data);
+	draw_map(data);
 	draw_weapon(data, line);
 	clear_ray(&ray);
 	mlx_put_image_to_window(data->ptr, data->win, data->img.ptr, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 15:03:28 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 20:23:11 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ int			main(int ac, char **av)
 		if (data->height > 1300)
 			data->height = 1300;
 		if (!(data->win = mlx_new_window(data->ptr, data->width, data->height,
-			"Cube 3d")))
-			return (0);
-		if (!ray_casting(data, "textures/sprites/shot1.XPM"))
-			return (0);
+			"Cube 3d")) || !ray_casting(data, "textures/sprites/shot1.XPM") ||
+			(data->save == 1 && create_bmp(data)))
+			return (closer(data));
 		mlx_hook(data->win, 2, 0, &key_pressed, data);
 		mlx_hook(data->win, 17, 0, &closer, data);
 		mlx_loop(data->ptr);

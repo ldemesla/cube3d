@@ -6,13 +6,16 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 15:03:47 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 17:41:25 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
 # define BUFFER_SIZE 32
+# define BYTES_PER_PIXEL 3
+# define FILE_HEADER_SIZE 14
+# define INFO_HEADER_SIZE 40
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
@@ -167,4 +170,5 @@ void			*ft_memset(void *str, int c, int n);
 void			move(t_data *data, int keycode);
 void			run(t_data *data);
 void			draw_life(t_data *data);
+int				create_bmp(t_data *data);
 #endif
