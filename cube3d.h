@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 17:41:25 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:03:32 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,5 @@ void			move(t_data *data, int keycode);
 void			run(t_data *data);
 void			draw_life(t_data *data);
 int				create_bmp(t_data *data);
+int				can_walk(int x, int y, t_data *data);
 #endif

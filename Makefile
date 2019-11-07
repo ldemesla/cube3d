@@ -6,13 +6,13 @@
 #    By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:12:40 by ldemesla          #+#    #+#              #
-#    Updated: 2019/11/07 17:31:05 by ldemesla         ###   ########.fr        #
+#    Updated: 2019/11/07 21:06:34 by ldemesla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: re, clean, fclean, all, bonus
 
-NAME= cube3d
+NAME= cub3D
 
 SRC_FILE=	arg_parser.c\
 			arg_parser2.c\
@@ -42,7 +42,7 @@ INCLUDES= minilibx
 all: $(NAME) 
 
 $(NAME): ${OBJ}
-	@gcc -Lminilibx -lmlx -framework OpenGL -framework AppKit -o cube3d ${OBJ} 
+	@gcc -Lminilibx -lmlx -framework OpenGL -framework AppKit -o cub3D ${OBJ} 
 
 %.o: %.c
 	@gcc -c -Wall -Werror -Wextra -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:19:36 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 15:03:39 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:04:10 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,27 @@ void	move(t_data *data, int keycode)
 
 void	move_up(t_data *data)
 {
-	if (data->map[(int)(data->pos_x + data->dir_x)]
-		[(int)(data->pos_y + data->dir_y)] == 0)
+	if (can_walk((int)(data->pos_x + (data->dir_x * (0.2 * data->speed))),
+		(int)(data->pos_y + (data->dir_y * (0.2 * data->speed))), data))
 	{
 		data->pos_x += (data->dir_x * (0.1 * data->speed));
 		data->pos_y += (data->dir_y * (0.1 * data->speed));
 	}
-	if (data->map[(int)(data->pos_x + data->dir_x)]
-		[(int)(data->pos_y + data->dir_y)] == 2)
+	if (data->map[(int)(data->pos_x + data->dir_x * data->speed * 0.2)]
+		[(int)(data->pos_y + data->dir_y * data->speed * 0.2)] == 2)
 		data->life -= 0.1;
 }
 
 void	move_down(t_data *data)
 {
-	if (data->map[(int)(data->pos_x - data->dir_x)]
-		[(int)(data->pos_y - data->dir_y)] == 0)
+	if (can_walk((int)(data->pos_x - (data->dir_x * 0.2 * data->speed)),
+		(int)(data->pos_y - (data->dir_y * 0.2 * data->speed)), data))
 	{
 		data->pos_x -= (data->dir_x * (0.1 * data->speed));
 		data->pos_y -= (data->dir_y * (0.1 * data->speed));
 	}
-	if (data->map[(int)(data->pos_x - data->dir_x)]
-		[(int)(data->pos_y - data->dir_y)] == 2)
+	if (data->map[(int)(data->pos_x - (data->dir_x * 0.2 * data->speed))]
+		[(int)(data->pos_y - data->dir_y * data->speed * 0.2)] == 2)
 		data->life -= 0.1;
 }
 
