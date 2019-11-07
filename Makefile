@@ -6,7 +6,7 @@
 #    By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:12:40 by ldemesla          #+#    #+#              #
-#    Updated: 2019/11/02 15:38:04 by ldemesla         ###   ########.fr        #
+#    Updated: 2019/11/07 14:18:55 by ldemesla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC_FILE=	arg_parser.c\
 			arg_parser3.c\
 			draw.c\
 			draw2.c\
+			draw3.c\
 			game.c\
 			get_next_line.c\
 			get_next_line_utils.c\

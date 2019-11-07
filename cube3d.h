@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 16:38:49 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:21:44 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct	s_data
 	t_sprite	*to_draw;
 	t_color		ceiling;
 	t_img		weapon;
+	float		speed;
+	float		life;
 }				t_data;
 
 typedef struct	s_ray
@@ -160,4 +162,8 @@ int				set_sprite(t_data *data);
 int				init(t_ray **ray, t_data **data);
 int				check_info(t_data *data);
 int				check_end_line(char *line, int nb);
+void			*ft_memset(void *str, int c, int n);
+void			move(t_data *data, int keycode);
+void			run(t_data *data);
+void			draw_life(t_data *data);
 #endif

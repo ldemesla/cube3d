@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 15:48:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 18:57:40 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:32:01 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int			init_data(t_data *data)
 	data->valid = 1;
 	data->save = 0;
 	data->weapon.ptr = 0;
+	data->speed = 1;
+	data->life = 0.7;
 	return (1);
 }
 
@@ -44,20 +46,13 @@ int			key_pressed(int keycode, void *param)
 
 	data = (t_data*)param;
 	data->x = 0;
-	if (keycode == 13)
-		move_up(data);
-	else if (keycode == 1)
-		move_down(data);
-	else if (keycode == 0)
-		move_left(data);
-	else if (keycode == 2)
-		move_right(data);
-	else if (keycode == 124)
-		rotate_right(data);
-	else if (keycode == 123)
-		rotate_left(data);
+	if (keycode == 13 || keycode == 1 || keycode == 0 || keycode == 2 ||
+		keycode == 124 || keycode == 123)
+		move(data, keycode);
 	else if (keycode == 53)
 		closer((void*)data);
+	else if (keycode == 257)
+		run(data);
 	if (keycode == 49)
 		shot(data);
 	else if (keycode == 14)
