@@ -1,6 +1,6 @@
 # wolf3d @ 42
 
-![wolf3d screenshot](/src/img.bmp)
+![wolf3d screenshot](src/img.bmp)
 
 A simple ray casting engine made in C using minilibX, with textures, basic
 lighting and basic map files.
