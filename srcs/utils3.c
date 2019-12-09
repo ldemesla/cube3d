@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 20:27:48 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/02 14:37:20 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:13:57 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		set_sprite(t_data *data)
 	int			fd;
 
 	i = -1;
-	fd = open("sprite_anim.txt", O_RDONLY);
+	fd = open("srcs/sprite_anim.txt", O_RDONLY);
 	while (get_next_line(fd, &line) && ++i < count)
 		free(line);
 	data->sprite.ptr = mlx_xpm_file_to_image(data->ptr, line,
