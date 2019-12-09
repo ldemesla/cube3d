@@ -1,6 +1,6 @@
-# wolf3d @ 42
+# cub3d
 
-![wolf3d screenshot](screen/screen.png)
+![cub3d screenshot](screen/screen.png)
 
 A simple ray casting engine made in C using minilibX, with textures, basic
 lighting and basic map files.
