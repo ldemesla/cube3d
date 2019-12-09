@@ -6,7 +6,7 @@
 /*   By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 11:56:47 by ldemesla          #+#    #+#             */
-/*   Updated: 2019/11/07 21:03:32 by ldemesla         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:30:04 by ldemesla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "minilibx/mlx.h"
+# include "../minilibx/mlx.h"
 # include <unistd.h>
 # include <fcntl.h>
 

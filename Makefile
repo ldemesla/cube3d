@@ -6,7 +6,7 @@
 #    By: ldemesla <ldemesla@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/18 12:12:40 by ldemesla          #+#    #+#              #
-#    Updated: 2019/11/07 21:06:34 by ldemesla         ###   ########.fr        #
+#    Updated: 2019/12/09 18:29:03 by ldemesla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,26 +14,26 @@
 
 NAME= cub3D
 
-SRC_FILE=	arg_parser.c\
-			arg_parser2.c\
-			arg_parser3.c\
-			draw.c\
-			draw2.c\
-			draw3.c\
-			game.c\
-			get_next_line.c\
-			get_next_line_utils.c\
-			move.c\
-			move2.c\
-			ray_casting.c\
-			ray_casting2.c\
-			utils.c\
-			utils2.c\
-			utils3.c\
-			ft_strlen.c\
-			ft_strncmp.c\
-			utils4.c \
-			bmp.c \
+SRC_FILE=	srcs/arg_parser.c\
+			srcs/arg_parser2.c\
+			srcs/arg_parser3.c\
+			srcs/draw.c\
+			srcs/draw2.c\
+			srcs/draw3.c\
+			srcs/game.c\
+			srcs/get_next_line.c\
+			srcs/get_next_line_utils.c\
+			srcs/move.c\
+			srcs/move2.c\
+			srcs/ray_casting.c\
+			srcs/ray_casting2.c\
+			srcs/utils.c\
+			srcs/utils2.c\
+			srcs/utils3.c\
+			srcs/ft_strlen.c\
+			srcs/ft_strncmp.c\
+			srcs/utils4.c \
+			srcs/bmp.c \
 
 OBJ=${SRC_FILE:.c=.o}
 
